@@ -8,3 +8,8 @@ jobs:
     steps:
       - name: step1 # 마찬가지로 생략 가능
         run: echo hello MTE world!
+
+      - name: step2 
+        run: | # 멀티 라인커맨드 실행
+          echo Debug1
+          echo Debug2
