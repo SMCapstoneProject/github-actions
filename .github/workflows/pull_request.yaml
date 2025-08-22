@@ -1,4 +1,4 @@
-name: pull-request-workflow # 생략해도 상관없으나 액션창에서 표현될 시각화 이름으로서 명시하는것이 좋음
+name: pull-request-workflow
 on: 
   pull_request: # push이벤트에 의해 트리거 됨
     types: [opened] # 그중에서도 풀 리퀘스트가 생성된 시점에서만 트리거
