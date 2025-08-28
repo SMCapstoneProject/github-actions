@@ -1,0 +1,17 @@
+name: issue-workflow
+on:
+  issues:
+    types: [opened]
+
+# 실행시킬 job의 집합
+jobs:
+  pull_request-job:
+    runs-on: ubuntu-latest # ubuntu를 Runner로 지정
+    steps:
+      - name: step1 # 마찬가지로 생략 가능
+        run: Runned by issue job.
+
+      - name: step2 
+        run: | # 멀티 라인커맨드 실행
+          echo Debug1
+          echo Debug2
