@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest # ubuntu를 Runner로 지정
     steps:
       - name: step1 # 마찬가지로 생략 가능
-        run: Runned by issue job.
+        run: echo Runned by issue job.
 
       - name: step2 
         run: | # 멀티 라인커맨드 실행
