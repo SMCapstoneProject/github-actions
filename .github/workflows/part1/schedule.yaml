@@ -1,0 +1,17 @@
+name: schedule-workflow
+on:
+  schedule:
+    - cron: '15 * * * *' # 트리거될 시간을 지정 (현재는 매일 매 시간마다 15분에 작동함)
+
+# 실행시킬 job의 집합
+jobs:
+  schedule-job:
+    runs-on: ubuntu-latest # ubuntu를 Runner로 지정
+    steps:
+      - name: step1 # 마찬가지로 생략 가능
+        run: echo Runned by schedule.
+
+      - name: step2 
+        run: | # 멀티 라인커맨드 실행
+          echo Debug1
+          echo Debug2

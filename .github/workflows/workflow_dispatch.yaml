@@ -1,0 +1,38 @@
+name: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+
+      name:
+        description: 'set name' # 화면에 보여질 name이라는 input에 대한 설명
+        required: true # input값이 반드시 필요한가?
+        default: 'github-actions' # input값의 기본값
+        types: string # input값의 데이터 타입
+        
+      environment:
+        description: 'set env'
+        required: true
+        default: 'dev'
+        types: choice
+        options:
+          - dev
+          - qa
+          - prod
+
+# 실행시킬 job의 집합
+jobs:
+  workflow_dispatch-job:
+    runs-on: ubuntu-latest # ubuntu를 Runner로 지정
+    steps:
+      - name: step1 # 마찬가지로 생략 가능
+        run: echo Runned by workflow_dispatch-job.
+
+      - name: step2 
+        run: | # 멀티 라인커맨드 실행
+          echo Debug1
+          echo Debug2
+
+      - name: echo inputs
+        run: | # input값의 이름을 출력
+          echo ${{ inputs.name }}
+          echo ${{ inputs.environment }}
