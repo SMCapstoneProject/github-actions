@@ -1,0 +1,28 @@
+name: issue-comment-workflow
+on: issue_comment
+
+# 실행시킬 job의 집합
+jobs:
+  pr-comment:
+    if: ${{ github.event.issue.pull_request }} # 만약 풀리퀘에서 코멘트가 작성되었다면
+    runs-on: ubuntu-latest # ubuntu를 Runner로 지정
+    steps:
+      - name: step1 # 마찬가지로 생략 가능
+        run: echo Runned by pr-comment.
+
+      - name: step2 
+        run: | # 멀티 라인커맨드 실행
+          echo Debug1
+          echo Debug2
+
+  issue-comment:
+    if: ${{ !github.event.issue.pull_request }} # 만약 풀리퀘에서 코멘트가 작성된게 아니라면
+    runs-on: ubuntu-latest # ubuntu를 Runner로 지정
+    steps:
+      - name: step1 # 마찬가지로 생략 가능
+        run: echo Runned by issue-comment.
+
+      - name: step2 
+        run: | # 멀티 라인커맨드 실행
+          echo Debug1
+          echo Debug2
