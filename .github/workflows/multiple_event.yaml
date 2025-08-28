@@ -1,0 +1,19 @@
+name: multiple-event-workflow
+on:
+  # push, issue가 open되었을 때, workflow_dispatch가 발생하였을 때 트리거
+  push:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+
+jobs:
+  multiple-event-job:
+    runs-on: ubuntu-latest # ubuntu를 Runner로 지정
+    steps:
+    - name: step1 # 마찬가지로 생략 가능
+      run: echo Runned by multiple-event-job.
+
+    - name: step2 
+      run: | # 멀티 라인커맨드 실행
+        echo Debug1
+        echo Debug2
