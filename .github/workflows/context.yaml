@@ -1,0 +1,10 @@
+name: checkout
+on: workflow_dispatch # 사용자가 원할때 트리거
+
+jobs:
+  context:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: github context 
+      run: echo '${{ toJSON(github) }}' # github context에있는 로그를 문자열로 변환해 출력
