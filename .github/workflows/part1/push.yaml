@@ -11,5 +11,5 @@ jobs:
 
       - name: step2 
         run: | # 멀티 라인커맨드 실행
-          echo Debug1
-          echo Debug2
+          echo test1
+          echo test2
