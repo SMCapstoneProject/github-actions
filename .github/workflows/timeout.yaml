@@ -1,0 +1,24 @@
+name: time-out
+on: push
+
+jobs:
+  timeout:
+  runs-on: ubuntu-latest
+  timeout-minutes: 2 # job level에서 job이 실행되고 2분이 지나면 자동으로 중단
+
+  steps:
+    # 일부러 무한루프를 하도록 step을 설정
+    - name: loop
+      run: |
+        count = 0
+        while true; do
+          echo "seconds: $count"
+          count = $((count + 1))
+          sleep 1
+        done
+      # timeout-minutes: 1 # step level에서 job이 실행되고 1분이 지나면 자동으로 중단
+    
+    # loop step에서 timeout에 의해 fail되므로 해당 echo step은 실행되지 않음
+    - name: echo
+      run: |
+        echo "hello world"
