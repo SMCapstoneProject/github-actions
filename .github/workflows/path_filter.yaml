@@ -1,0 +1,14 @@
+name: path-filter
+on:
+  push:
+    paths: # part1 디렉토리의 파일이 변경될때만 트리거
+    - '.github/workflows/part1/*'
+
+jobs:
+  # job 이름
+  path-filter:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: echo
+      run: echo test
