@@ -1,0 +1,14 @@
+name: tag-filter
+on:
+  push:
+    tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+' # v0.0.0 ~ v9.9.9의 패턴으로 태그를 푸시할 때 트리거
+
+jobs:
+  # job 이름
+  tag-filter:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: echo
+      run: echo test

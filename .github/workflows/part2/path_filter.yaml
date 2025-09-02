@@ -1,0 +1,16 @@
+name: path-filter
+on:
+  push:
+    paths: # part1 디렉토리에 속한 그 어떤 파일이 변경될때만 트리거
+    - '.github/workflows/part1/*'
+    # 만약 part1 디렉토리의 push.yaml은 트리거에 제외하고싶으면 아래처럼 작성
+    # - '!.github/workflows/part1/push.yaml' 
+
+jobs:
+  # job 이름
+  path-filter:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: echo
+      run: echo test
