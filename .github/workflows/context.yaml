@@ -8,3 +8,8 @@ jobs:
     steps:
     - name: github context 
       run: echo '${{ toJSON(github) }}' # github context에있는 로그를 문자열로 변환해 출력
+
+    - name: checkout github context
+      run: |
+        echo ${{ github.repository }}
+        echo ${{ github.event_name }}
