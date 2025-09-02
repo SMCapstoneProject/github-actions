@@ -1,0 +1,34 @@
+name: artifact
+on: push
+
+jobs:
+  upload-artifact:
+    runs-on: ubuntu-latest
+
+    steps:
+    # artifact로 사용할 파일을 생성하는 step
+    - name: echo
+      run: echo hello-world > hello.txt # hello-world라는 내용으로 hello.txt파일 생성
+    
+    # artifact를 업로드하는 step
+    - name: upload artifact
+      uses: actions/upload-artifact@v3 # upload artifact 액션 사용
+      with:
+        name: artifact-test # artifact 이름
+        paths: ./hello.txt # artifact 경로
+
+  download-artifact:
+    runs-on: ubuntu-latest
+    needs: [upload-artifact]
+
+    steps:
+    # artifact를 다운로드하는 step
+    - name: download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: artifact-test # 다운받을 artifact 이름
+        path: ./ # 다운받을 경로를 이곳으로
+    
+    # 다운받은 artifact를 출력하는 step
+    - name: check
+      run: cat hello.txt
