@@ -1,7 +1,7 @@
 name: branch-filter
 on:
   push:
-    branchs: ["dev"] # 이를 통해 'dev' branch에서만 트리거
+    branchs: ["issue-comment-test"] # 이를 통해 'dev' branch에서만 트리거
 
 jobs:
   # job 이름
