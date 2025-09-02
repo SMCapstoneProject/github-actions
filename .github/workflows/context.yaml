@@ -1,4 +1,4 @@
-name: checkout
+name: context
 on: workflow_dispatch # 사용자가 원할때 트리거
 
 jobs:
