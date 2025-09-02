@@ -1,7 +1,7 @@
 name: branch-filter
 on:
   push:
-    branches: ["issue-comment-test"]
+    branches: ["dev"]
 
 jobs:
   # job 이름
