@@ -15,7 +15,7 @@ jobs:
       uses: actions/upload-artifact@v4 # upload artifact 액션 사용
       with:
         name: artifact-test # artifact 이름
-        paths: ./hello.txt # artifact 경로
+        path: ./hello.txt # artifact 경로
 
   download-artifact:
     runs-on: ubuntu-latest
