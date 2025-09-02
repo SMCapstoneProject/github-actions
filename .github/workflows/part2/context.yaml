@@ -6,9 +6,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # github context에있는 로그를 문자열로 변환해 출력
     - name: github context 
-      run: echo '${{ toJSON(github) }}' # github context에있는 로그를 문자열로 변환해 출력
+      run: echo '${{ toJSON(github) }}'
 
+    # 레포지토리 이름과 이벤트 이름(workflow_dispatch) 출력
     - name: checkout github context
       run: |
         echo ${{ github.repository }}
