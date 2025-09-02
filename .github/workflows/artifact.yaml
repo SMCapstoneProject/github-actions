@@ -12,7 +12,7 @@ jobs:
     
     # artifact를 업로드하는 step
     - name: upload artifact
-      uses: actions/upload-artifact@v3 # upload artifact 액션 사용
+      uses: actions/upload-artifact@v4 # upload artifact 액션 사용
       with:
         name: artifact-test # artifact 이름
         paths: ./hello.txt # artifact 경로
@@ -24,7 +24,7 @@ jobs:
     steps:
     # artifact를 다운로드하는 step
     - name: download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: artifact-test # 다운받을 artifact 이름
         path: ./ # 다운받을 경로를 이곳으로
