@@ -10,10 +10,10 @@ jobs:
     # 일부러 무한루프를 하도록 step을 설정
     - name: loop
       run: |
-        count = 0
+        count=0
         while true; do
           echo "seconds: $count"
-          count = $((count + 1))
+          count=$((count + 1))
           sleep 1
         done
       # timeout-minutes: 1 # step level에서 job이 실행되고 1분이 지나면 자동으로 중단
