@@ -1,0 +1,24 @@
+name: if-1
+on:
+  push:
+  workflow_dispatch:
+  # push와 수동으로 트리거될 때 작동
+
+jobs:
+  # push로 트리거될 때 실행될 job
+  job1:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+    - name: get event_name
+      run: echo ${{ github.event_name }}
+
+  # 수동으로 트리거될 때 실행될 job
+  job2:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'push'
+
+    steps:
+    - name: get event_name
+      run: echo ${{ github.event_name }}
