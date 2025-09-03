@@ -27,5 +27,5 @@ jobs:
         run: echo 'act'
 
       - name: contains_arr
-        if: contains(fromJSON'[12, 14, 16]', 12) # arry로 입력받은 [12, 14, 16]에 12가 포함되어있으므로 true
+        if: contains(fromJSON('[12, 14, 16]'), 12) # arry로 입력받은 [12, 14, 16]에 12가 포함되어있으므로 true
         run: echo '12'
