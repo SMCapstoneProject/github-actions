@@ -12,6 +12,7 @@ jobs:
 
       # 실패되는 step으로 인해 실행X
       - name: echo
+        if: always() # 그러나 if: always()로 인해 강제로 실행 됨
         run: echo hello
 
   job2:
