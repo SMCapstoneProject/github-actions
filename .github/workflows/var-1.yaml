@@ -1,0 +1,50 @@
+name: var-1
+on: push
+# workflow 레벨에서 key는 level, value는 workflow라는 변수를 생성
+env:
+  level: workflow
+
+jobs:
+  get-env-1:
+    runs-on: ubuntu-latest
+
+    # 환경변수 level을 출력 (workflow에서 선언된 환경변수)
+    steps:
+    - name: check env
+      run: echo "LEVEL ${{ env.level }}"
+  
+  get-env-2:
+    runs-on: ubuntu-latest
+    # job 레벨에서 key는 level, value는 job라는 변수를 생성
+    env:
+      level: job
+
+    # 환경변수 level을 출력 (job에서 선언된 환경변수가 우선순위가 더 높으므로 step 출력됨)
+    steps:
+    - name: check env
+      run: echo "LEVEL ${{ env.level }}"
+
+  get-env-3:
+    runs-on: ubuntu-latest
+    # job 레벨에서 key는 level, value는 job라는 변수를 생성
+    env:
+      level: job
+    
+    # 환경변수 level을 출력 (step에서 선언된 환경변수가 우선순위가 더 높으므로 step 출력됨)
+    steps:
+    - name: check env
+      run: echo "LEVEL ${{ env.level }}"
+      # step 레벨에서 key는 level, value는 step라는 변수를 생성
+      env:
+        level: step
+
+  get-env:
+    runs-on: ubuntu-latest
+
+    # output처럼 생성하여 사용
+    steps:
+    - name: create env
+      run: echo "level=job" >> $GITHUB_ENV
+    
+    - name: check env
+      run: echo "LEVEL ${{ env.level }}"
