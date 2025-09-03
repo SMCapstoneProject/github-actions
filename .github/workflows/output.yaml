@@ -1,0 +1,19 @@
+name: output
+on: push
+
+# 같은 job 내에서 output 공유하기
+jobs:
+  create-output:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: echo output
+      id: check-output # 중복 방지용
+      run: |
+        echo "test=hello" >> $GITHUB_OUTPUT
+      # key: test, value: hello인 output을 저장
+
+    - name: check output
+      run: |
+        echo ${{ steps.check-output.outputs.test }}
+      # steps.<스텝id>.output.<key이름>으로 접근하여 echo
