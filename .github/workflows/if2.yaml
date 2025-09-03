@@ -1,0 +1,24 @@
+name: if-2
+on: push
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 강제 실패 step
+      - name: exit 1
+        run: exit 1
+
+      # 실패되는 step으로 인해 실행X
+      - name: echo
+        run: echo hello
+
+  job2:
+    needs: [job1] # job1은 실패로 끝나기때문에 종속성이 부여된 job2도 실행X
+    runs-on: ubuntu-latest
+    if: always() # 그러나 if: always()로 인해 강제로 실행 됨
+
+    steps:
+      - name: echo
+        run: echo hello
