@@ -2,8 +2,20 @@ name: environment
 on: push
 
 jobs:
+  # 해당 job에서는 repository 레벨에서 환경변수와 시크릿 출력
   get-env:
     runs-on: ubuntu-latest
+
+    steps:
+    - name: check env & secret
+      run: |
+        echo ${{ vars.level }}
+        echo ${{ secrets.key }}
+
+  # 해당 job에서는 environment 레벨에서 환경변수와 시크릿 출력
+  get-env-dev:
+    runs-on: ubuntu-latest
+    environment: dev
 
     steps:
     - name: check env & secret
