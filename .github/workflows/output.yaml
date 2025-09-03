@@ -5,6 +5,9 @@ on: push
 jobs:
   create-output:
     runs-on: ubuntu-latest
+    outputs:
+      test: ${{ steps.check-output.outputs.test }}
+    #다른 job에서도 사용가능하도록 outputs에 기록
 
     steps:
     - name: echo output
@@ -17,3 +20,12 @@ jobs:
       run: |
         echo ${{ steps.check-output.outputs.test }}
       # steps.<스텝id>.output.<key이름>으로 접근하여 echo
+  
+  get-output:
+    needs: [create-output] # 해당 job은 create-output job이 실행되어 ouput이 생성된 후 실행돼야 함
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: get output
+      run: echo ${{ needs.create-output.outputs.test }}
+      # needs.<job이름>.output.<key이름>으로 접근하여 echo
