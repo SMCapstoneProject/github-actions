@@ -22,3 +22,16 @@ jobs:
     steps:
     - name: get event_name
       run: echo ${{ github.event_name }}
+
+  # step레벨에서 push와 수동으로 트리거될 때 분기 나눠 작성
+  job3:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: get event_name
+      if: github.event_name == 'push'
+      run: echo "PUSH"
+
+    - name: get event_name
+      if: github.event_name != 'push'
+      run: echo "WORKFLOW_DISPATCH"
