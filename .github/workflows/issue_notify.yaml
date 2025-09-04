@@ -43,7 +43,14 @@ jobs:
     needs: [get-keyword]
     if: needs.get-keyword.outputs.level != 'Undefined' # .txt에 기록된 키워드가 들어간 issue에만 작동
     runs-on: ubuntu-latest
-    environment: ${{ needs.get-keyword.outputs.level }}
+    # environment: ${{ needs.get-keyword.outputs.level }}
+    # job레벨에서 바로 env를 받아오면 actions 그래프에서 어떤 env를 사용하여 작동했는지 확인 불가
+    # actions 그래프에서 어떤 env를 사용하여 작동했는지 확인하기 위해 matrix를 활용
+    # 원래 matrix의 사용 용도는 리스트 속 변수 기반으로 여러 job을 실행하는것이지만, 확인용으로 사용
+    strategy:
+      matrix:
+        environment: ["${{ needs.get-keyword.outputs.level }}"]
+    environment: ${{ matrix.environment }}
 
     steps:
     # slack에 알림 발송
