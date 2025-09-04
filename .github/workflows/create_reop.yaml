@@ -32,5 +32,31 @@ jobs:
     
     # repository를 생성하는 과정
     - name: create-repo
+      id: create-repo # 결과를 넘겨주도록 id 설정 (넘겨받는 step에서 steps.create-repo.outcome 사용)
       run: |
         gh repo create SMCapstoneProject/${{ inputs.prefix }}-${{ inputs.name }} --public --add-readme
+
+    # slack에 결과를 전달하는 과정
+    - name: slack 
+      if: always() # 앞에 repository 생성 step이 실패했더라도 실패를 전송하도록 always() 설정
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "attachments": [
+              {
+                "pretext": "create repo result",
+                "color": "28a745",
+                "fields": [
+                  {
+                    "title": "create repo result ${{ steps.create-repo.outcome }}",
+                    "short": true,
+                    "value": "${{ inputs.prefix }}-${{ inputs.name }}"
+                  }
+                ]
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
