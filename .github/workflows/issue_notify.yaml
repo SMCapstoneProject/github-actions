@@ -1,0 +1,71 @@
+name: issue-notify
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  # issue 이름에 접근하여 keyword가 포함되어있는지 판단하는 job
+  get-keyword:
+    runs-on: ubuntu-latest
+    # steps.get-keyword.outputs.level를 value로 가지는 level이라는 key 생성
+    outputs:
+      level: ${{ steps.get-keyword.outputs.level }}
+    
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        # uses를 통해 다른이가 만들어 놓은 액션을 가져와 실행(import 같은 개념)
+        # 그중에서도 actions/checkout@v4는 레포지토리의 코드를 가져오는 액션을 취함
+      
+      - name: get keyword
+        id: get-keyword
+        run: |
+          echo level=Undefined >> $GITHUB_OUTPUT
+
+          keywords=$(cat keyword-list.txt)
+          for keyword in $keywords; do
+            if [[ "${{ github.event.issue.title }}" =~ "$keyword" ]]; then
+              echo level=$keyword >> $GITHUB_OUTPUT
+            fi
+          done
+        # level=Undefined >> $GITHUB_OUTPUT는 기본 값 설정 후 output에 저장
+        # 이후 txt파일을 읽어온 뒤 keywords변수에 저장
+        # 반복문을 통해 각각의 단어를 keyword변수에 넣고 issue title에 keyword가 포함되어있는지 (=~) 체크
+        # 포함되어있다면 level에 keyword를 저장하고 output 업데이트
+        # fi와 done은 각각 if와 for 구문의 끝을 의미
+      
+      # output 출력
+      - name: get output
+        run: echo ${{ steps.get-keyword.outputs.level }}
+
+  # issue 내 keyword 포함 검사 결과값을 가지고 slack 채널에 전송하는 job 
+  slack:
+    needs: [get-keyword]
+    if: needs.get-keyword.outputs.level != 'Undefined' # .txt에 기록된 키워드가 들어간 issue에만 작동
+    runs-on: ubuntu-latest
+    environment: ${{ needs.get-keyword.outputs.level }}
+
+    steps:
+    # slack에 알림 발송
+    - name: slack 
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "attachments": [
+              {
+                "pretext": "issue alert message",
+                "color": "28a745",
+                "fields": [
+                  {
+                    "title": "Level : ${{ needs.get-keyword.outputs.level }}",
+                    "short": true,
+                    "value": "issue url : ${{ github.event.issue.html_url }}"
+                  }
+                ]
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
