@@ -1,0 +1,36 @@
+name: create-repo
+on:
+  workflow_dispatch:
+    inputs:
+      # prefix라는 input은 'example, TEAM_BESCHA' 둘 중 하나 선택
+      prefix:
+        description: 'set repo prefix'
+        required: true
+        default: 'TEAM_BESCHA'
+        type: choice
+        options:
+          - example
+          - TEAM_BESCHA
+
+      # 생성할 repo이름을 입력
+      name:
+        description: 'set repo name'
+        required: true
+        default: 'github-actions'
+        type: string
+
+jobs:
+  create-repo-automation:
+    runs-on: ubuntu-latest
+
+    # 깃허브에 로그인하여 권한을 가져오는 과정
+    steps:
+    - name: gh auth login
+      run: |
+        echo ${{ secrets.PERSONAL_ACCESS_TOKEN }} | gh auth login --with-token
+      # |기호는 왼쪽 명령어의 출력(결과)를 오른쪽 명령어의 입력으로 직접 전달한다는 의미
+    
+    # repository를 생성하는 과정
+    - name: create-repo
+      run: |
+        gh repo create SMCapstoneProject/${{ inputs.prefix }}-${{ inputs.name }} --public --add-readme
